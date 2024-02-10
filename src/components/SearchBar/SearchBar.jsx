@@ -1,4 +1,6 @@
 import toast from "react-hot-toast";
+import css from "./SearchBar.module.css";
+import { VscSearch } from "react-icons/vsc";
 
 export const SearchBar = ({ onSearch }) => {
   const handleSubmit = (e) => {
@@ -12,16 +14,19 @@ export const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <header>
-      <form onSubmit={handleSubmit}>
+    <header className={css.header}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
+          className={css.input}
           name="query"
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
         />
-        <button type="submit">Search</button>
+        <button className={css.searchBtn} type="submit">
+          <VscSearch />
+        </button>
       </form>
     </header>
   );

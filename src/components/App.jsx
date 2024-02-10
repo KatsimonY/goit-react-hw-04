@@ -6,6 +6,7 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Loader } from "./Loader/Loader";
 import { ErrorMessage } from "./ErrorMessage/ErrorMessage";
 import { LoadMoreBtn } from "./LoadMoreBtn/LoadMoreBtn";
+import css from "./App.module.css";
 
 export const App = () => {
   const [query, setQuery] = useState("");
@@ -49,7 +50,7 @@ export const App = () => {
   }, [query, page]);
 
   return (
-    <div>
+    <div className={css.box}>
       <SearchBar onSearch={searchImages} />
       {images.length > 0 && <ImageGallery items={images} />}
       {error && <ErrorMessage />}
@@ -57,7 +58,7 @@ export const App = () => {
       {images.length > 0 && !loading && (
         <LoadMoreBtn loadMore={handleLoadMore} />
       )}
-      <Toaster />
+      <Toaster position="bottom-right" />
     </div>
   );
 };
