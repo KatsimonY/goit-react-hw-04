@@ -6,6 +6,7 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Loader } from "./Loader/Loader";
 import { ErrorMessage } from "./ErrorMessage/ErrorMessage";
 import { LoadMoreBtn } from "./LoadMoreBtn/LoadMoreBtn";
+import { ImageModal } from "./ImageModal/ImageModal";
 import css from "./App.module.css";
 
 export const App = () => {
@@ -14,6 +15,16 @@ export const App = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [imageModal, setImageModal] = useState({});
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const searchImages = (newQuery) => {
     setQuery(`${Date.now()}/${newQuery}`);
@@ -52,11 +63,25 @@ export const App = () => {
   return (
     <div className={css.box}>
       <SearchBar onSearch={searchImages} />
-      {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && (
+        <ImageGallery
+          items={images}
+          openModal={openModal}
+          setImageModal={setImageModal}
+        />
+      )}
       {error && <ErrorMessage />}
       {loading && <Loader />}
       {images.length > 0 && !loading && (
         <LoadMoreBtn loadMore={handleLoadMore} />
+      )}
+      {modalIsOpen && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          modalImage={imageModal.urls.regular}
+          descr={imageModal.description}
+        />
       )}
       <Toaster position="bottom-right" />
     </div>
